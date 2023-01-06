@@ -16,6 +16,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { cartActions } from 'features/home/cartSlice';
 import moment from 'moment';
+import { Package } from 'types/order';
 
 const useRowStyles = makeStyles({
   root: {
@@ -122,20 +123,20 @@ export function OrderList() {
 
   const generalOrderInfo = orderList.map((order) => {
     return {
-      _id: order._id || '',
-      time: order.createdAt || new Date().toString(),
-      name: order.customerInformation.name,
-      address: order.customerInformation.address,
-      phone: order.customerInformation.phone,
-      productions: order.productionInformation.map((prod) => {
+      _id: order.order_id || '',
+      time: order.created_at || new Date().toString(),
+      name: order.user_name,
+      address: order.address,
+      phone: order.phone,
+      productions: order.products.map((pack: Package) => {
         return {
-          name: prod.name,
-          quantity: prod.quantity,
-          price: prod.price,
-          totalPrice: prod.price * prod.quantity,
+          name: pack.name,
+          quantity: pack.quantity,
+          price: pack.price,
+          totalPrice: pack.price * pack.quantity,
         };
       }),
-      orderPrice: order.productionInformation.reduce((total, current) => {
+      orderPrice: order.products.reduce((total, current) => {
         return (total += current.price * current.quantity);
       }, 0),
     };

@@ -45,7 +45,7 @@ export interface CardProps {
   description: string;
   image: string;
   status: StatusTypeEnum;
-  _id: string;
+  product_id: string;
 }
 
 export default function CardProduct(props: CardProps) {
@@ -57,14 +57,14 @@ export default function CardProduct(props: CardProps) {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState('');
 
-  const { name, price, description, status, _id, image } = props;
+  const { name, price, description, status, product_id, image } = props;
 
   const handleRedirectDeleteProduct = () => {
-    dispatch(adminActions.redirectDeleteProduct(_id));
+    dispatch(adminActions.redirectDeleteProduct(product_id));
   };
 
   const handleRedirectUpdateProduct = () => {
-    dispatch(adminActions.redirectUpdateProduct(_id || ''));
+    dispatch(adminActions.redirectUpdateProduct(product_id || ''));
   };
 
   const handleAddToCart = () => {
@@ -72,7 +72,7 @@ export default function CardProduct(props: CardProps) {
       cartActions.addToCart({
         name,
         price,
-        _id,
+        product_id,
         description,
         image,
         quantity: +quantity,

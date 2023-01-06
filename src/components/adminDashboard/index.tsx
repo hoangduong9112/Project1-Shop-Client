@@ -25,16 +25,15 @@ export function Dashboard() {
   }, [dispatch]);
 
   const productList = useAppSelector((state) => state.admin.productList);
-
   return (
     <Box className={classes.root}>
       {productList.map((product) => (
         <CardProduct
-          key={product._id}
+          key={product.product_id}
           name={product.name}
           price={product.price}
           description={product.description}
-          _id={product._id}
+          product_id={product.product_id}
           image={product.image}
           status={StatusTypeEnum.ADMIN}
         />

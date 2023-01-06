@@ -8,7 +8,12 @@ import { adminActions } from './adminSlice';
 
 function* fetchProductList() {
   const { data } = yield call(productApi.getProductList);
-  const productList: Product[] = data;
+  const productList: Product[] = data.data.map((product: Product) => {
+    return {
+      ...product,
+      price: +product.price,
+    };
+  });
   yield put(adminActions.setProductList(productList));
 }
 

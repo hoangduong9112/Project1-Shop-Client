@@ -11,3 +11,8 @@ export interface ErrorResponse {
   errorMessage: string;
   status: number;
 }
+
+export interface APIResponse<T> {
+  message: string;
+  data: T;
+}

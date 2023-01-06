@@ -1,11 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { SecureStorageEnum } from 'enums/secureStorageEnum';
 
-const accessToken =
-  sessionStorage.getItem(SecureStorageEnum.ACCESS_TOKEN) ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImR1b25nIiwiaWF0IjoxNjQyMDcwMjAyLCJleHAiOjE2NDIwNzM4MDJ9.z3yQexWvlN7rULV5Nt4eE44iUA7vE-y3CY6Tf38jqGk';
+const accessToken = sessionStorage.getItem(SecureStorageEnum.ACCESS_TOKEN);
 const axiosAdmin = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://localhost:3030',
   headers: {
     Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json',

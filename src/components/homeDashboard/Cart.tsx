@@ -66,21 +66,26 @@ export function Cart() {
   const handleSubmitForm = (formValue: CustomerInformation) => {
     dispatch(
       cartActions.order({
-        customerInformation: formValue,
-        productionInformation: orderedItems,
+        ...formValue,
+        packages: orderedItems.map((item) => {
+          return {
+            product_id: item.product_id,
+            quantity: item.quantity,
+          };
+        }),
       })
     );
   };
 
   const initialValue: CustomerInformation = {
-    name: '',
+    user_name: '',
     address: '',
     phone: '',
   };
 
   const schema = yup
     .object({
-      name: yup.string().required('Please enter name.'),
+      user_name: yup.string().required('Please enter name.'),
       address: yup.string().required('Please enter address.'),
       phone: yup
         .string()
@@ -164,7 +169,7 @@ export function Cart() {
         </Typography>
 
         <form onSubmit={handleSubmit(handleSubmitForm)}>
-          <InputField name="name" control={control} label="Name" />
+          <InputField name="user_name" control={control} label="Name" />
           <InputField name="address" control={control} label="Address" />
           <InputField name="phone" control={control} label="Phone" />
           <Box mt={3} textAlign="center">

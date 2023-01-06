@@ -1,7 +1,14 @@
 export interface Product {
-  _id: string;
+  product_id: string;
   name: string;
   description: string;
   price: number;
-  image: string;
+  image: any;
+}
+
+export interface ProductParams {
+  name: string;
+  description: string;
+  price: number;
+  image?: any;
 }

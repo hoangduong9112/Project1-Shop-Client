@@ -50,8 +50,8 @@ export function AdminLayout() {
         <Switch>
           <Route path="/admin/createProduct" component={CreateProduct} />
           <Route path="/admin/orderList" component={OrderList} />
-          <Route path="/admin/updateProduct/:_id" component={UpdateProduct} />
-          <Route path="/admin/deleteProduct/:_id" component={DeleteProduct} />
+          <Route path="/admin/updateProduct/:product_id" component={UpdateProduct} />
+          <Route path="/admin/deleteProduct/:product_id" component={DeleteProduct} />
           <Route path="/admin" component={Dashboard} />
         </Switch>
       </Box>

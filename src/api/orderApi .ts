@@ -1,9 +1,10 @@
 import { OrderInformation } from 'types/order';
+import { APIResponse } from 'types/response';
 import axiosAdmin from './axiosAdmin';
 import axiosClient from './axiosClient';
 
 const orderApi = {
-  getOrderList(): Promise<OrderInformation[]> {
+  getOrderList(): Promise<APIResponse<OrderInformation[]>> {
     const url = '/order';
     return axiosAdmin.get(url);
   },

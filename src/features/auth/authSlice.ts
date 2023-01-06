@@ -25,7 +25,6 @@ const authSlice = createSlice({
       toast.success('Successfully');
     },
     loginFailed(state, action: PayloadAction<ErrorResponse>) {
-      console.log(action.payload);
       state.error = action.payload;
     },
     logout(state) {

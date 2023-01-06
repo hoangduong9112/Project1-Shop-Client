@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import findIndex from 'lodash/findIndex';
 import remove from 'lodash/remove';
 import { toast } from 'react-toastify';
-import { OrderedItem, OrderInformation } from 'types/order';
+import { OrderedItem, OrderInformation, OrderInformationParams } from 'types/order';
 
 export interface CartSate {
   isOrdering: boolean;
@@ -28,7 +28,9 @@ const cartSlice = createSlice({
       if (action.payload.quantity > 0) {
         state.totalQuantity += action.payload.quantity;
         state.totalPrice += action.payload.price * action.payload.quantity;
-        const existItemIndex = findIndex(state.orderedItems, { _id: action.payload._id });
+        const existItemIndex = findIndex(state.orderedItems, {
+          product_id: action.payload.product_id,
+        });
         if (existItemIndex >= 0) {
           state.orderedItems[existItemIndex].quantity += action.payload.quantity;
         } else {
@@ -48,7 +50,7 @@ const cartSlice = createSlice({
       state.orderList = action.payload;
     },
 
-    order(state, action: PayloadAction<Partial<OrderInformation>>) {
+    order(state, action: PayloadAction<Partial<OrderInformationParams>>) {
       state.isOrdering = true;
     },
     orderNewProductSuccess(state) {
@@ -66,7 +68,7 @@ const cartSlice = createSlice({
     redirectHome(state) {},
     removeItem(state, action: PayloadAction<OrderedItem>) {
       remove(state.orderedItems, (item) => {
-        return item._id === action.payload._id;
+        return item.product_id === action.payload.product_id;
       });
       state.totalQuantity -= action.payload.quantity;
       state.totalPrice -= action.payload.price * action.payload.quantity;

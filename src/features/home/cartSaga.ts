@@ -6,14 +6,24 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
 import orderApi from 'api/orderApi ';
 import { OrderInformation } from 'types/order';
+import { APIResponse } from 'types/response';
 
 function* openCart() {
   yield put(push('/cart'));
 }
 
 function* fetchOrderList() {
-  const orderList: OrderInformation[] = yield call(orderApi.getOrderList);
-  yield put(cartActions.setOrderList(orderList));
+  const result: APIResponse<OrderInformation[]> = yield call(orderApi.getOrderList);
+
+  result.data.forEach((order) => {
+    order.products.forEach((product) => {
+      return {
+        ...product,
+        price: product.price,
+      };
+    });
+  });
+  yield put(cartActions.setOrderList(result.data));
 }
 
 function* order(action: PayloadAction<Partial<OrderInformation>>) {

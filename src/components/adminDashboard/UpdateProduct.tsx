@@ -1,8 +1,8 @@
-import { Box, Button, CircularProgress, Paper, Typography } from '@material-ui/core';
+import { Box, Button, CircularProgress, Input, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { InputField } from 'components/formField/InputField';
-import { Product } from 'types/product';
+import { Product, ProductParams } from 'types/product';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { RouteComponentProps } from 'react-router-dom';
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface RouteParams {
-  _id: string;
+  product_id: string;
 }
 
 export function UpdateProduct(props: RouteComponentProps<RouteParams>) {
@@ -37,18 +37,30 @@ export function UpdateProduct(props: RouteComponentProps<RouteParams>) {
   const isUpdating = useAppSelector((state) => state.admin.isUpdating);
   const productList = useAppSelector((state) => state.admin.productList);
 
-  const _id = props.match.params._id;
-  const edittedProduct = productList.find((product) => product._id === _id) || ({} as Product);
+  const product_id = props.match.params.product_id;
+  const edittedProduct =
+    productList.find((product) => +product.product_id === +product_id) || ({} as Product);
 
   const initialValue: Partial<Product> = {
     name: edittedProduct.name,
     description: edittedProduct.description,
     price: edittedProduct.price,
-    image: edittedProduct.image,
   };
 
-  const handleSubmitForm = (formValue: Product) => {
-    dispatch(adminActions.updateProduct({ ...formValue, _id }));
+  const [images, setImages] = React.useState([]);
+
+  const onChange = (e: any) => {
+    setImages(e.target.files);
+  };
+
+  const handleSubmitForm = (formValue: ProductParams) => {
+    dispatch(
+      adminActions.updateProduct({
+        ...formValue,
+        product_id: product_id,
+        image: images[0],
+      })
+    );
   };
 
   const schema = yup
@@ -59,11 +71,10 @@ export function UpdateProduct(props: RouteComponentProps<RouteParams>) {
         .number()
         .required('Please enter a number.')
         .min(1000, 'Price must be at least 1000 VND'),
-      image: yup.string().required('Please enter image URL.'),
     })
     .required();
 
-  const { control, handleSubmit } = useForm<Product>({
+  const { control, handleSubmit } = useForm<ProductParams>({
     defaultValues: initialValue,
     resolver: yupResolver(schema),
   });
@@ -78,7 +89,9 @@ export function UpdateProduct(props: RouteComponentProps<RouteParams>) {
           <InputField name="name" control={control} label="Name" />
           <InputField name="description" control={control} label="Description" />
           <InputField name="price" control={control} label="Price" type="number" />
-          <InputField name="image" control={control} label="Image" />
+          <Box>
+            <Input type="file" name="image" onChange={onChange} />
+          </Box>
 
           <Box mt={3} textAlign="center">
             <Button type="submit" variant="contained" color="primary">

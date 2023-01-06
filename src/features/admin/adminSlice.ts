@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from 'types/product';
+import { Product, ProductParams } from 'types/product';
 import { toast } from 'react-toastify';
 
 export interface AdminState {
@@ -33,7 +33,7 @@ const adminSlice = createSlice({
       state.productList = action.payload;
     },
 
-    createNewProduct(state, action: PayloadAction<Product>) {
+    createNewProduct(state, action: PayloadAction<ProductParams>) {
       state.isCreating = true;
     },
     createNewProductSuccess(state) {

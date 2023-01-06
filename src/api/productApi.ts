@@ -32,9 +32,11 @@ const productApi = {
 
     return axiosAdmin.put(url, formData);
   },
-  deleteProduct(_id: string): Promise<any> {
-    const url = `/product/${_id}`;
-    return axiosAdmin.delete(url);
+  deleteProduct(product_id: string): Promise<any> {
+    const url = `/product/delete`;
+    const data = { product_id: product_id };
+    console.log('data', data);
+    return axiosAdmin.post(url, data);
   },
 };
 

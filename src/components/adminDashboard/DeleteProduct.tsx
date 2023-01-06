@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 });
 
 export interface RouteParams {
-  _id: string;
+  product_id: string;
 }
 
 export function DeleteProduct(props: RouteComponentProps<RouteParams>) {
@@ -40,7 +40,7 @@ export function DeleteProduct(props: RouteComponentProps<RouteParams>) {
   };
 
   const handleDeleteProduct = () => {
-    dispatch(adminActions.deleteProduct(props.match.params._id));
+    dispatch(adminActions.deleteProduct(props.match.params.product_id));
   };
 
   return (

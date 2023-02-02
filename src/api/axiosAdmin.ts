@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { SecureStorageEnum } from 'enums/secureStorageEnum';
 
 const accessToken = sessionStorage.getItem(SecureStorageEnum.ACCESS_TOKEN);
+console.log(accessToken);
 const axiosAdmin = axios.create({
   baseURL: 'http://localhost:3030',
   headers: {

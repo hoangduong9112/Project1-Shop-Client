@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { SecureStorageEnum } from 'enums/secureStorageEnum';
+import { getItem } from 'utils/secureStorage';
 
-const accessToken = sessionStorage.getItem(SecureStorageEnum.ACCESS_TOKEN);
+const accessToken = getItem();
 console.log(accessToken);
 const axiosAdmin = axios.create({
   baseURL: 'http://localhost:3030',
